@@ -1,5 +1,10 @@
 package com.github.helmutwiedemann.controller;
 
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,8 +24,9 @@ public class JsonController {
 
 	@RequestMapping("/getData")
 	public @ResponseBody
-	DummyModel getData(Model modelMap) {
-		return dataDao.getData();
+	List<Map<String, Object>> getData(Model modelMap, HttpServletRequest request) {
+		String userAgent = request.getHeader("user-agent");
+		return dataDao.getData(userAgent);
 	}
 
 	@RequestMapping(value = "/writeData", method = RequestMethod.POST)
